@@ -67,23 +67,27 @@ delete from Production.Product2 where Name like 'Bearing Ball'
 
 select * from Production.Product2
 
---Update
+--Update(updating a name with a new one)
 update Production.Product2 set Name ='New Blade' where Name like 'Blade'
 
 select*from Production.Product2
 
 --Joins
---Inner Join
+--Inner Join(should be at least one match between both tables)
+--creating a new table Myemployee.
 create table Myemployee (EmployeeID int ,FisrtName varchar(20),LastName varchar(20))
 
+--adding data using Insert to Myemployee
 Insert into Myemployee values (1,'Michael','Scott')
 Insert into Myemployee values (2,'Pam','Beely')
 Insert into Myemployee values (3,'Dwight','Schrute')
 
 Select * from Myemployee
 
+--creating another table MySalary
 create table MySalary (EmployeeID int ,Salary float)
 
+--adding data using Insert to MySalary
 Insert into MySalary values (1,10000)
 Insert into MySalary values (2,8000)
 Insert into MySalary values (3,6000)
@@ -93,7 +97,7 @@ Select* from Myemployee
 
 Select A.FisrtName,A.LastName,B.Salary from Myemployee A inner join MySalary B on A.EmployeeID =B.EmployeeID
 
---Left Join
+--Left outer Join(All rows from left table included.Non matched entries from right table will have NULL)
 
 create table MyPhoneNumber (EmployeeID int ,PhoneNumber int)
 
@@ -104,7 +108,7 @@ select * from MyPhoneNumber
 
 select A.FisrtName ,A.LastName ,B.PhoneNumber   from Myemployee A left join MyPhoneNumber B on A.EmployeeID = B.EmployeeID
 
---Right Join
+--Right outer Join(All rows from right table included.Non matched entries from left table will have NULL)
 
 create table MyParking(EmployeeID int ,ParkingSlot varchar(20))
 
@@ -113,7 +117,7 @@ insert into MyParking values(2,'A2')
 
 select A.ParkingSlot,B.FisrtName,B.LastName from MyParking A right join Myemployee B on A.EmployeeID=B.EmployeeID
 
---full join
+--full join(All rows from left and right table included.Non matched entries from left and right table will have Null).
 
 create table MyCustomer (CustomerID int,CustometName varchar(20))
 
