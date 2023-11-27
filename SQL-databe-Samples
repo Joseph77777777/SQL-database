@@ -1,0 +1,243 @@
+/*@author Joseph Nakhle 
+
+@version: 2023-03 (4.27.0)
+@since release 10/12/23 
+*/
+
+--SQL database samples
+use AdventureWorks2012
+
+select * from HumanResources.Department
+
+--show me all the department names
+select Name from HumanResources.Department
+
+--show me all the department groups
+select GroupName from HumanResources.Department
+
+--show me all the distinct group names
+select distinct GroupName from HumanResources.Department
+
+--show me all the department name that are part of the manufacturing group
+select Name,GroupName from HumanResources.Department where GroupName Like 'Manufacturing'
+
+--give me all the employees from the employee table
+select * from HumanResources.Employee
+
+--give me the list of all the employee that the orglevel is equal to 2
+select * from HumanResources.Employee where OrganizationLevel = 2
+
+--give me the list of all the employee that the orglevel is equal to 2 or 3
+select * from HumanResources.Employee where OrganizationLevel in (2,3)
+
+--give me the list of employee that have design engineer as job title
+select * from HumanResources.Employee where JobTitle like 'Design Engineer'
+
+--give me the list of employee that have the word manager in their title
+select * from HumanResources.Employee where JobTitle like '%Manager'
+
+--give me the list of employee that have the word contorl in their title
+select * from HumanResources.Employee where JobTitle like '%Control%'
+
+--give me  the list of employee that are born after 1 jan 1980
+select * from HumanResources.Employee where BirthDate > '1/1/1980'
+
+--give me  the list of employee that are born between 1 jan 1970 and 1 jan 1980
+select * from HumanResources.Employee where BirthDate > '1/1/1970' and BirthDate < '1/1/1980'
+
+select * from HumanResources.Employee where BirthDate between '1/1/1970' and '1/1/1980'
+
+--Calculated and adding columns 
+select * from Production.Product
+
+select Name,ListPrice from Production.Product
+
+select Name,ListPrice ,ListPrice +10 as NewListePrice From Production.Product
+
+--Into to store the above command in a separate table
+select Name,ListPrice ,ListPrice +10 as NewListePrice into Production.Product2 from Production.Product 
+
+select * from Production.Product2
+
+--delete Data from a table
+delete from Production.Product2 where Name like 'Bearing Ball'
+
+select * from Production.Product2
+
+--Update
+update Production.Product2 set Name ='New Blade' where Name like 'Blade'
+
+select*from Production.Product2
+
+--Joins
+--Inner Join
+create table Myemployee (EmployeeID int ,FisrtName varchar(20),LastName varchar(20))
+
+Insert into Myemployee values (1,'Michael','Scott')
+Insert into Myemployee values (2,'Pam','Beely')
+Insert into Myemployee values (3,'Dwight','Schrute')
+
+Select * from Myemployee
+
+create table MySalary (EmployeeID int ,Salary float)
+
+Insert into MySalary values (1,10000)
+Insert into MySalary values (2,8000)
+Insert into MySalary values (3,6000)
+
+Select * from MySalary
+Select* from Myemployee
+
+Select A.FisrtName,A.LastName,B.Salary from Myemployee A inner join MySalary B on A.EmployeeID =B.EmployeeID
+
+--Left Join
+
+create table MyPhoneNumber (EmployeeID int ,PhoneNumber int)
+
+insert into MyPhoneNumber values (1,1234)
+insert into MyPhoneNumber values (2,5678)
+
+select * from MyPhoneNumber
+
+select A.FisrtName ,A.LastName ,B.PhoneNumber   from Myemployee A left join MyPhoneNumber B on A.EmployeeID = B.EmployeeID
+
+--Right Join
+
+create table MyParking(EmployeeID int ,ParkingSlot varchar(20))
+
+insert into MyParking values(1,'A1')
+insert into MyParking values(2,'A2')
+
+select A.ParkingSlot,B.FisrtName,B.LastName from MyParking A right join Myemployee B on A.EmployeeID=B.EmployeeID
+
+--full join
+
+create table MyCustomer (CustomerID int,CustometName varchar(20))
+
+insert into MyCustomer values (1, 'Rakesh')
+insert into MyCustomer values (2,'John')
+
+Select * from MyCustomer
+
+create table MyOrder (OrderNumber int,OrderName varchar(20),CustomerID int)
+
+insert into MyOrder values (1,'O1',1)
+insert into MyOrder values (2,'O2',2)
+insert into MyOrder values (3,'O3',7)
+insert into MyOrder values (4,'O4',8)
+
+select B.CustomerID,B.CustometName,A.OrderNumber,A.OrderName,A.CustomerID FROM MyOrder A full join MyCustomer B on A.CustomerID =B.CustomerID
+
+--Cross join
+create table MydepartmentID(ID int ,DeptID varchar(20))
+
+insert into MydepartmentID values (1,'D1')
+insert into MydepartmentID values (2,'D2')
+
+select * from MydepartmentID
+
+create table MydepartmentName(ID int ,DeptName varchar(20))
+
+insert into MydepartmentName values (1,'Marketing')
+insert into MydepartmentName values (2,'Sales')
+
+select* from MydepartmentName
+
+Select * from MydepartmentID cross join MydepartmentName 
+
+--return the current date
+select getdate()
+
+--return the last day
+select getdate() -1
+
+--date part
+
+select datepart (yyyy ,Getdate()) as year
+
+select DATEPART (mm,getdate()) as month
+
+select DATEPART (DD,getdate()) as day
+
+--Date add (adding date on the current date)
+
+select DATEADD(day,2,getdate())
+
+select DATEADD(day,2,'11/11/2023')
+
+select DATEADD(MONTH,2,getdate())
+
+select DATEADD(YEAR,2,getdate()
+
+--
+Select top 10 * from Production.WorkOrder
+
+-- differece between the start and end date
+select WorkOrderID ,ProductID,EndDate,StartDate ,DATEDIFF(day,StartDate,EndDate) from Production.WorkOrder
+
+--Aggregate functions
+
+select* from MySalary
+
+---average
+
+select AVG(Salary) from MySalary
+
+--count
+
+select COUNT(salary) from MySalary
+
+--summation of salary
+
+select SUM (salary) from MySalary
+
+--minimum salary
+
+select MIN (salary) from MySalary
+
+--maximum salary
+
+select MAX (salary) from MySalary
+
+--
+select * from MyOrder
+
+--concat
+print concat ('string1' , '  string2')
+
+select orderNumber,ordername ,CONCAT(OrderNumber ,' ', ordername) as concattext from MyOrder
+
+--left
+select ordernumber,ordername ,left(ordername,1) from MyOrder
+
+--right
+select ordernumber,ordername ,right(ordername,1) from MyOrder
+
+--substring 
+
+select ordernumber,ordername ,SUBSTRING(ordername,3,5) from MyOrder
+
+--lower case
+
+select ordernumber,ordername ,LOWER(ordername) from MyOrder
+
+--upper case
+select ordernumber,ordername ,upper(ordername) from MyOrder
+
+--length
+select ordernumber,ordername,LEN(ordername) from MyOrder
+
+--first letter upper case and the rest lower
+select ordernumber,ordername ,concat(UPPER(left(ordername,1)),LOWER(SUBSTRING(ordername,2,LEN(ordername)))) from MyOrder
+
+--trim
+select '   mytext   '
+
+--left trim
+select LTRIM ('    mytext  ')
+
+--right trim
+select RTRIM('     mytext   ')
+
+--left and right trim
+select LTRIM (rtrim ('   mytext   '))
