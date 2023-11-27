@@ -116,7 +116,7 @@ create table MyCustomer (CustomerID int,CustometName varchar(20))
 
 insert into MyCustomer values (1, 'Rakesh')
 insert into MyCustomer values (2,'John')
-
+ 
 Select * from MyCustomer
 
 create table MyOrder (OrderNumber int,OrderName varchar(20),CustomerID int)
