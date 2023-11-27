@@ -7,7 +7,7 @@
 --SQL database samples
 use AdventureWorks2012
 
-select * from HumanResources.Department
+select * from HumanResources.Department 
 
 --show me all the department names
 select Name from HumanResources.Department
