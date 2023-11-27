@@ -115,7 +115,7 @@ select A.ParkingSlot,B.FisrtName,B.LastName from MyParking A right join Myemploy
 create table MyCustomer (CustomerID int,CustometName varchar(20))
 
 insert into MyCustomer values (1, 'Rakesh')
-insert into MyCustomer values (2,'John')
+insert into MyCustomer values (2,'John') 
  
 Select * from MyCustomer
 
