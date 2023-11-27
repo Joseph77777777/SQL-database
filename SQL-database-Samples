@@ -5,8 +5,11 @@
 */
 
 --SQL database samples
+
+--using AdventureWorks database samples
 use AdventureWorks2012
 
+--select all from HumanResources.Department table
 select * from HumanResources.Department 
 
 --show me all the department names
@@ -15,7 +18,7 @@ select Name from HumanResources.Department
 --show me all the department groups
 select GroupName from HumanResources.Department
 
---show me all the distinct group names
+--show me all the distinct group names(distinct is used to not repeat the same name of group)
 select distinct GroupName from HumanResources.Department
 
 --show me all the department name that are part of the manufacturing group
